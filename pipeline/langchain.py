@@ -62,7 +62,6 @@ class LangChain(Pipeline):
                 | model.langchain_llm()
                 | StrOutputParser()
         )
-        print("ready")
         response = rag_chain.invoke(prompt, {"callbacks": []})
         print(response)
         return format_message(response)
