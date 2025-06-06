@@ -25,7 +25,7 @@ spec:
           image: thisthatdc/nim-example:v0.1.1
           ports:
             - name: http
-              containerPort: 8082
+              containerPort: 8080
               protocol: TCP
           env:
             - name: OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE

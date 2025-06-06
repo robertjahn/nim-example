@@ -81,4 +81,4 @@ def submit_completion(framework: str, prompt: str):
 if __name__ == "__main__":
 
     app.mount("/", StaticFiles(directory="./public", html=True), name="public")
-    uvicorn.run(app, host="0.0.0.0", port=8081)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
