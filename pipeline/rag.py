@@ -14,13 +14,13 @@ from langchain_core.output_parsers import StrOutputParser
 
 from utils import format_message
 
-class LangChain(Pipeline):
+class Rag(Pipeline):
 
     def __init__(self):
         super().__init__()
 
         # Retrieve the source data
-        logger.info("In langchain Init. Retrieve the source data")
+        logger.info("In rag Init. Retrieve the source data")
         docs_list = []
         for item in os.listdir(path="kb"):
             logger.info(item)
@@ -33,9 +33,9 @@ class LangChain(Pipeline):
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000, chunk_overlap=200
         )
-        logger.info("In langchain init. After text_splitter")
+        logger.info("In rag init. After text_splitter")
         self._documents = text_splitter.split_documents(docs_list)
-        logger.info("In langchain init. After text_splitter.split_documents")
+        logger.info("In rag init. After text_splitter.split_documents")
         self._prompt = ChatPromptTemplate.from_template(
             """
     1. Use the following pieces of context to answer the question as travel advise at the end.
@@ -47,24 +47,24 @@ class LangChain(Pipeline):
     
     Helpful Answer:"""
         )
-        logger.info("In langchain init. After ChatPromptTemplate.from_template")
+        logger.info("In rag init. After ChatPromptTemplate.from_template")
         self._document_prompt = PromptTemplate(
             input_variables=["page_content", "source"],
             template="content:{page_content}\nsource:{source}",
         )
-        logger.info("In langchain init. After PromptTemplate")
+        logger.info("In rag init. After PromptTemplate")
 
     @staticmethod
     def format_docs(docs):
-        logger.info("In langchain format_doc")
+        logger.info("In rag format_doc")
         return "\n\n".join(doc.page_content for doc in docs)
 
     def start(self, model: Model, prompt: str):
-        logger.info("In langchain start")
+        logger.info("In rag start")
         vector = FAISS.from_documents(self._documents, model.langchain_embedding())
-        logger.info("In langchain, after vector")
+        logger.info("In rag, after vector")
         retriever = vector.as_retriever()
-        logger.info("In langchain, after retriever")
+        logger.info("In rag, after retriever")
 
         rag_chain = (
                 {"context": retriever | self.format_docs, "input": RunnablePassthrough()}
@@ -72,7 +72,7 @@ class LangChain(Pipeline):
                 | model.langchain_llm()
                 | StrOutputParser()
         )
-        logger.info("In langchain, after rag_chain")
+        logger.info("In rag, after rag_chain")
         logger.info(rag_chain)
         response = rag_chain.invoke(prompt, {"callbacks": []})
         logger.info(response)

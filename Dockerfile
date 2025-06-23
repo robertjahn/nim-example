@@ -9,6 +9,7 @@ COPY app.py  ./
 COPY ./models ./models
 COPY ./pipeline ./pipeline
 COPY ./utils ./utils
+COPY ./tools ./tools
 
 EXPOSE 8080
 

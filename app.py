@@ -16,7 +16,8 @@ from traceloop.sdk import Traceloop
 
 from models.nim import Nim
 from pipeline.basic import Basic
-from pipeline.langchain import LangChain
+from pipeline.rag import Rag
+from pipeline.agentic import Agentic
 from utils import format_message
 from utils.secrets import read_secret
 
@@ -45,11 +46,13 @@ ai_models = {
 }
 
 basic = Basic()
-langchain = LangChain()
+rag = Rag()
+agentic = Agentic()
 
 pipelines = {
-    "none": basic,
-    "langchain": langchain,
+    "basic": basic,
+    "rag": rag,
+    "agentic": agentic,
 }
 
 app = FastAPI()
