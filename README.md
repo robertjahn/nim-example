@@ -2,7 +2,7 @@
 
 ## Setup 
 
-1. Create Dynatrace API token with the [scope required](https://docs.dynatrace.com/docs/shortlink/otel-getstarted-otlpexport#authentication-export-to-activegate) for the OLTP API.
+1. Create Dynatrace API token with the [scope required](https://docs.dynatrace.com/docs/shortlink/otel-getstarted-otlpexport#authentication-export-to-activegate) for the OTLP API.
 1. Set these environment variables locallu or in the `deploment\nim-example.yaml` file
 
     ```
